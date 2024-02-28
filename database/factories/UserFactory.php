@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 /**
@@ -23,22 +22,26 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $phone = str_split(fake()->e164PhoneNumber());
+        unset($phone[0]);
+        $phone = implode($phone);
+
         return [
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => static::$password ??= Hash::make('password'),
+            'first_name' => fake()->firstName(),
+            'last_name' => fake()->lastName(),
+            'email' => fake()->unique()->freeEmail(),
+            'phone' => $phone,
             'remember_token' => Str::random(10),
         ];
     }
 
     /**
-     * Indicate that the model's email address should be unverified.
+     * Indicate that the model's password should be password.
      */
-    public function unverified(): static
+    public function password(): static
     {
         return $this->state(fn (array $attributes) => [
-            'email_verified_at' => null,
+            'password' => static::$password ??= 'password',
         ]);
     }
 }
