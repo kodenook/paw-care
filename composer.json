@@ -15,6 +15,7 @@
     ],
     "require": {
         "php": "^8.1",
+        "codeat3/blade-fluentui-system-icons": "^1.33",
         "filament/filament": "^3.2",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.10",
@@ -34,7 +35,8 @@
         "psr-4": {
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
-            "Database\\Seeders\\": "database/seeders/"
+            "Database\\Seeders\\": "database/seeders/",
+            "Database\\Providers\\": "database/providers/"
         }
     },
     "autoload-dev": {
