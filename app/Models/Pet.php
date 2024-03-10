@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Specie extends Model
+class Pet extends Model
 {
     use HasFactory;
 
@@ -18,10 +18,12 @@ class Specie extends Model
      */
     protected $fillable = [
         'name',
+        'user_id',
+        'specie_id',
     ];
 
     /**
-     * Interact with the specie's name.
+     * Interact with the pet's name.
      */
     protected function name(): Attribute
     {
@@ -32,10 +34,18 @@ class Specie extends Model
     }
 
     /**
-     * Get the pets for the specie.
+     * Get the user that owns the pet.
      */
-    public function pets(): HasMany
+    public function user(): BelongsTo
     {
-        return $this->hasMany(Pet::class);
+        return $this->belongsTo(User::class)->select('id', 'first_name', 'last_name', 'email', 'phone');
+    }
+
+    /**
+     * Get the specie that owns the pet.
+     */
+    public function specie(): BelongsTo
+    {
+        return $this->belongsTo(Specie::class)->select('id', 'name');
     }
 }

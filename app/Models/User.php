@@ -7,6 +7,7 @@ use Filament\Models\Contracts\HasName;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -109,5 +110,13 @@ class User extends Authenticatable implements FilamentUser, HasName
         return Attribute::make(
             set: fn (string $value) => strtolower($value)
         );
+    }
+
+    /**
+     * Get the pets for the user.
+     */
+    public function pets(): HasMany
+    {
+        return $this->hasMany(Pet::class);
     }
 }

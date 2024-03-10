@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\SpecieResource\Pages;
+use App\Filament\Resources\SpecieResource\RelationManagers\PetsRelationManager;
 use App\Models\Specie;
 use App\Rules\AlphaSpace;
 use Filament\Forms\Components\TextInput;
@@ -52,7 +53,7 @@ class SpecieResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            PetsRelationManager::class,
         ];
     }
 
