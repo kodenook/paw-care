@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class AppointmentScheduling extends Model
@@ -54,5 +55,13 @@ class AppointmentScheduling extends Model
             get: fn (string $value) => ucwords($value),
             set: fn (string $value) => strtolower($value)
         );
+    }
+
+    /**
+     * Get the medical record associated with the appointment.
+     */
+    public function medicalRecord(): HasOne
+    {
+        return $this->hasOne(MedicalRecord::class, 'appointment_id');
     }
 }

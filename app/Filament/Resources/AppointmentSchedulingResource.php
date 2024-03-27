@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\AppointmentSchedulingResource\Pages;
 use App\Models\AppointmentScheduling;
 use App\Rules\AlphaSpace;
+use Carbon\Carbon;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Radio;
@@ -20,6 +21,7 @@ use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Support\Enums\FontWeight;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
@@ -204,6 +206,9 @@ class AppointmentSchedulingResource extends Resource
             ])
             ->actions([
                 ViewAction::make(),
+                Action::make('add medical record')
+                    ->url(fn (AppointmentScheduling $record): string => route('filament.admin.resources.medical-records.create', ['appointment_id' => $record->id]))
+                    ->visible(fn (AppointmentScheduling $record): bool => ! empty($record->medicalRecord()->getResults()) && Carbon::parse($record->date)->format('Y-m-d') === now()->format('Y-m-d')),
             ])
             ->bulkActions([
                 //

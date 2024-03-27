@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\PetResource\Pages;
+use App\Filament\Resources\PetResource\RelationManagers\MedicalRecordRelationManager;
 use App\Models\Pet;
 use App\Models\Specie;
 use App\Models\User;
@@ -129,7 +130,7 @@ class PetResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            MedicalRecordRelationManager::class,
         ];
     }
 
